@@ -14,7 +14,9 @@ const commands: Record<string, CommandExecutor> = {
   calc [expression] - Calculate simple math expressions
   about: About moz.prompt
   github: Pulls up the github repo of moz.prompt
-  bugs: Pulls up a known bugs/errors list(in the github repo)`,
+  bugs: Pulls up a known bugs/errors list(in the github repo)
+  meow: Test command(testing my coding skills)
+  audio: Plays a short audio`,
 
   clear: () => "CLEAR_TERMINAL",
 
@@ -31,6 +33,14 @@ const commands: Record<string, CommandExecutor> = {
   bugs: ( ) => "https://github.com/Mozilla-hue/moz.prompt/issues",
 
   ls: () => Object.keys(commands).join('\n'),
+
+  meow: (args) => `meow indeed... ${args.join(' ')}`,
+  
+  audio: () => {
+    const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-16a.mp3");
+    audio.play().catch(e => "Failed to play audio");
+    return "Playing audio...";
+  },
 
   calc: (args) => {
     try {
