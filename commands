@@ -1,0 +1,72 @@
+import { themes, type ThemeName } from './themes';
+
+type CommandExecutor = (args: string[]) => string;
+
+const commands: Record<string, CommandExecutor> = {
+  help: () => `Available commands:
+  help - Show this help message
+  clear - Clear the terminal
+  echo [text] - Display text
+  date - Show current date/time
+  theme [name] - Change terminal theme or list available themes
+  whoami - Display current user
+  ls - List available commands
+  calc [expression] - Calculate simple math expressions
+  about: About moz.prompt
+  github: Pulls up the github repo of moz.prompt
+  bugs: Pulls up a known bugs/errors list(in the github repo)`,
+
+  clear: () => "CLEAR_TERMINAL",
+
+  echo: (args) => args.join(" "),
+
+  date: () => new Date().toLocaleString(),
+
+  whoami: () => "you@terminal",
+
+  about: ( ) => "moz.prompt is a terminal emulator built with React and Tailwind CSS, with the help of AI.",
+
+  github:   ( ) => "https://github.com/Mozilla-hue/moz.prompt",
+
+  bugs: ( ) => "https://github.com/Mozilla-hue/moz.prompt/issues",
+
+  ls: () => Object.keys(commands).join('\n'),
+
+  calc: (args) => {
+    try {
+      return eval(args.join(' ')).toString();
+    } catch {
+      return "Invalid expression";
+    }
+  },
+
+  theme: (args) => {
+    if (args.length === 0) {
+      return `Available themes:\n${Object.keys(themes).join('\n')}`;
+    }
+
+    const themeName = args[0].toLowerCase();
+    if (themeName in themes) {
+      return `THEME_CHANGE:${themeName}`;
+    }
+
+    return `Theme "${themeName}" not found. Available themes:\n${Object.keys(themes).join('\n')}`;
+  },
+};
+
+export function executeCommand(input: string): string {
+  const [cmd, ...args] = input.trim().split(/\s+/);
+
+  if (!cmd) return "";
+
+  const executor = commands[cmd.toLowerCase()];
+  if (!executor) {
+    return `Command not found: ${cmd}. Type 'help' for available commands.`;
+  }
+
+  try {
+    return executor(args);
+  } catch (err) {
+    return `Error executing command: ${err}`;
+  }
+}
