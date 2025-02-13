@@ -13,10 +13,10 @@ const commands: Record<string, CommandExecutor> = {
   ls - List available commands
   calc [expression] - Calculate simple math expressions
   about: About moz.prompt
-  github: Pulls up the github repo of moz.prompt
-  bugs: Pulls up a known bugs/errors list(in the github repo)
+  github: Pull up the github repo of moz.prompt
+  bugs: Pull up a known bugs/errors list(in the github repo)
   meow: Test command(testing my coding skills)
-  audio: Plays a short audio`,
+  audio: Play a short audio`,
 
   clear: () => "CLEAR_TERMINAL",
 
@@ -26,17 +26,22 @@ const commands: Record<string, CommandExecutor> = {
 
   whoami: () => "you@terminal",
 
-  about: ( ) => "moz.prompt is a terminal emulator built with React and Tailwind CSS, with the help of AI.",
+  about: () => `╭───────────────────────────────────────────────╮
+│  moz.prompt - Terminal Emulator                │
+│  Built with React and Tailwind CSS             │
+│  Created with the help of AI                   |
+│  Made by @mozla2021                            |
+╰───────────────────────────────────────────────╯`,
 
-  github:   ( ) => "https://github.com/Mozilla-hue/moz.prompt",
+  github:   ( ) => "https://github.com/Mozilla-hue/moz.prompt is the github repo for moz.prompt.",
 
   bugs: ( ) => "https://github.com/Mozilla-hue/moz.prompt/issues",
 
   ls: () => Object.keys(commands).join('\n'),
 
   meow: (args) => `meow indeed... ${args.join(' ')}`,
-  
-  audio: () => {
+
+    audio: () => {
     const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-16a.mp3");
     audio.play().catch(e => "Failed to play audio");
     return "Playing audio...";
